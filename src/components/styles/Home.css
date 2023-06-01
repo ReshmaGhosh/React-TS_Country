@@ -10,4 +10,27 @@
 }
 .home-para {
   color: aliceblue;
+  padding-bottom: 20px;
+}
+.button {
+  background-color: #4855c8;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+.button button {
+  font-size: 20px;
+  font-weight: 700;
+  background-color: #4855c8;
+  text-decoration: none;
+  border: none;
+  color: white;
+  padding: 5px;
 }

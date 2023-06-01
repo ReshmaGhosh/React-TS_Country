@@ -9,12 +9,7 @@ export type Country = {
       };
     };
   };
-  currencies: {
-    [key: string]: {
-      name: string;
-      symbol: string;
-    };
-  };
+
   capital: string[];
   region: string;
   languages: {
