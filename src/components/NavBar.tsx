@@ -10,15 +10,12 @@ import HomeIcon from "@mui/icons-material/Home";
 import PublicIcon from "@mui/icons-material/Public";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-// import Switch from "@mui/material/Switch";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
+import DetailsIcon from "@mui/icons-material/Details";
+import Badge from "@mui/material/Badge";
 import { Link } from "react-router-dom";
+import { Country } from "./types/type";
 
-// import MenuItem from "@mui/material/MenuItem";
-// import Menu from "@mui/material/Menu";
-
-function MenuAppBar() {
+function MenuAppBar({ favourites }: { favourites: Country[] }) {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -36,18 +33,6 @@ function MenuAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {/* <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? "Logout" : "Login"}
-        />
-      </FormGroup> */}
       <AppBar position="static">
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <div className="container">
@@ -77,43 +62,28 @@ function MenuAppBar() {
                 <PublicIcon sx={{ fontSize: "30px", color: "white" }} />
               </Link>
             </IconButton>
+
             <IconButton color="inherit">
-              <Link to="/favourites" style={{ textDecoration: "none" }}>
-                <FavoriteIcon sx={{ fontSize: "30px", color: "white" }} />
+              <Link to="/countrydetails" style={{ textDecoration: "none" }}>
+                <DetailsIcon sx={{ fontSize: "30px", color: "white" }} />
               </Link>
             </IconButton>
-          </div>
 
-          {/* {auth && (
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              ></IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
+            <IconButton color="inherit">
+              <Badge
+                badgeContent={favourites.length}
+                color="secondary"
                 anchorOrigin={{
                   vertical: "top",
                   horizontal: "right",
                 }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-              </Menu>
-            </div>
-          )} */}
+                <Link to="/favourites" style={{ textDecoration: "none" }}>
+                  <FavoriteIcon sx={{ fontSize: "30px", color: "white" }} />
+                </Link>
+              </Badge>
+            </IconButton>
+          </div>
         </Toolbar>
       </AppBar>
     </Box>

@@ -1,100 +1,5 @@
-// import React, { useEffect, useState } from "react";
-
-// import { Country } from "../types/type";
-
-// const url = "https://restcountries.com/v3.1/all";
-
-// export default function CountryList() {
-//   const [countries, setCountries] = useState<Country[]>([]);
-//   const [page, setPage] = useState(0);
-//   const rowsPerPage = 10;
-
-//   function fetchData() {
-//     fetch(url)
-//       .then((response) => response.json())
-//       .then((data) => setCountries(data))
-//       .catch((error) => console.log(error));
-//   }
-//   console.log(countries);
-//   useEffect(() => {
-//     fetchData();
-//   }, []);
-//   const handleChangePage = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setPage(+event.target.value);
-//   };
-
-//   return (
-//     <div>
-//       <input
-//         type="number"
-//         value={page}
-//         onChange={handleChangePage}
-//         min={0}
-//         max={Math.ceil(countries.length / rowsPerPage)}
-//       />
-//       <table>
-//         <thead>
-//           <tr>
-//             <th>Flag</th>
-//             <th>Name</th>
-//             <th>Region</th>
-//             <th>Population</th>
-//             <th>Languages</th>
-//             {/* <th>Capital</th>
-//             <th>Borders</th>
-//             <th>Area</th>
-//             <th>Timezones</th>
-//             <th>Continents</th> */}
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {countries
-//             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-//             .map((country) => (
-//               <tr key={country.name.common}>
-//                 <td>
-//                   <img src={country.flags.png} alt={country.name.common} />
-//                 </td>
-//                 <td>{country.name.common}</td>
-//                 <td>{country.region}</td>
-//                 <td>{country.population}</td>
-//                 <td>
-//                   {country.languages
-//                     ? Object.values(country.languages).join(", ")
-//                     : ""}
-//                 </td>
-
-//                 {/* <td>{country.area}</td>
-
-//                 <td>
-//                   {country.capital && Array.isArray(country.capital)
-//                     ? country.capital.join(", ")
-//                     : ""}
-//                 </td>
-//                 <td>
-//                   {country.borders && Array.isArray(country.borders)
-//                     ? country.borders.join(", ")
-//                     : ""}
-//                 </td>
-//                 <td>
-//                   {country.timezones && Array.isArray(country.timezones)
-//                     ? country.timezones.join(", ")
-//                     : ""}
-//                 </td>
-//                 <td>
-//                   {country.continents && Array.isArray(country.continents)
-//                     ? country.continents.join(", ")
-//                     : ""}
-//                 </td> */}
-//               </tr>
-//             ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// }
-
 import React, { useEffect, useState } from "react";
+import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -103,37 +8,59 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import CircularProgress from "@mui/material/CircularProgress";
 
+import { Link } from "react-router-dom";
 import { Country } from "../types/type";
+import CountryDetail from "./CountryDetail";
+import { IconButton } from "@mui/material";
 
 const url = "https://restcountries.com/v3.1/all";
 
-export default function CountryList() {
+type CountryListProps = {
+  favourites: Country[];
+  handleFavourite: (country: Country) => void;
+};
+
+export default function CountryList({
+  favourites,
+  handleFavourite,
+}: CountryListProps) {
   const [countries, setCountries] = useState<Country[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [loading, setLoading] = useState(false);
 
   function fetchData() {
+    setLoading(true);
     fetch(url)
       .then((response) => response.json())
-      .then((data) => setCountries(data))
-      .catch((error) => console.log(error));
+      .then((data) => {
+        setCountries(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }
 
   useEffect(() => {
     fetchData();
   }, []);
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event?.target.value);
+  };
+
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
-  // const handleChangeRowsPerPage = (
-  //   event: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   setRowsPerPage(+event.target.value);
-  //   setPage(0);
-  // };
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -141,8 +68,33 @@ export default function CountryList() {
     setPage(0);
   };
 
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
+  }
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
+      <TextField
+        id="outlined-basic"
+        label="Search country here"
+        variant="outlined"
+        value={searchTerm}
+        onChange={handleSearchChange}
+      />
+
+      {searchTerm ? <CountryDetail name={searchTerm} /> : null}
+
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -183,6 +135,26 @@ export default function CountryList() {
                           )
                         )
                       : ""}
+                  </TableCell>
+
+                  <TableCell>
+                    <IconButton onClick={() => handleFavourite(country)}>
+                      <FavoriteIcon
+                        sx={{
+                          color: favourites.some(
+                            (favCountry) =>
+                              favCountry.name.common === country.name.common
+                          )
+                            ? "red"
+                            : "inherit",
+                        }}
+                      />
+                    </IconButton>
+                    <Link to={`/countries/${country.name.common}`}>
+                      <IconButton>
+                        <ArrowForwardIosIcon />
+                      </IconButton>
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))}

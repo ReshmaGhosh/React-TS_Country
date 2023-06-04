@@ -1,12 +1,13 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-function CountryPage() {
+function CountryDetailsPage() {
   return (
     <div>
+      {/* <h2>Country Details</h2> */}
       <Outlet />
     </div>
   );
 }
 
-export default CountryPage;
+export default CountryDetailsPage;
