@@ -54,83 +54,94 @@ export default function CountryCard() {
   }, [name]);
 
   return (
-    <div>
-      <h2>Country Details</h2>
-      <Card sx={{ maxWidth: 345 }}>
-        <CardHeader
-          avatar={
-            countryData && (
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="country detaiis">
-                {countryData.name.common[0].toUpperCase()}
-              </Avatar>
-            )
-          }
-          action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-          }
-          title={countryData?.name?.common || "Loading..."}
-          subheader={countryData?.capital || ""}
-        />
-        <CardMedia
-          component="img"
-          height="194"
-          image={countryData?.flags?.png || ""}
-          alt={name}
-        />
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            Region: {countryData?.region || "N/A"}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Population: {countryData?.population || "N/A"}
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          {/* <IconButton aria-label="share"></IconButton> */}
-          <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </ExpandMore>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <h2 style={{ paddingBottom: "80px" }}>Country Details</h2>
+
+      <div>
+        <Card sx={{ maxWidth: 345 }}>
+          <CardHeader
+            avatar={
+              countryData && (
+                <Avatar sx={{ bgcolor: red[500] }} aria-label="country detaiis">
+                  {countryData.name.common[0].toUpperCase()}
+                </Avatar>
+              )
+            }
+            action={
+              <IconButton aria-label="settings">
+                <MoreVertIcon />
+              </IconButton>
+            }
+            title={countryData?.name?.common || "Loading..."}
+            subheader={countryData?.capital || ""}
+          />
+          <CardMedia
+            component="img"
+            height="194"
+            image={countryData?.flags?.png || ""}
+            alt={name}
+          />
           <CardContent>
-            <Typography paragraph>
-              Language:
-              {countryData?.languages
-                ? Object.values(countryData.languages).join(", ")
-                : "N/A"}
-            </Typography>
             <Typography variant="body2" color="text.secondary">
               Region: {countryData?.region || "N/A"}
             </Typography>
-
             <Typography variant="body2" color="text.secondary">
-              Area: {countryData?.area || "N/A"} sq km
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Timezones:{" "}
-              {countryData?.timezones
-                ? countryData.timezones.join(", ")
-                : "N/A"}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Continents:{" "}
-              {countryData?.continents
-                ? countryData.continents.join(", ")
-                : "N/A"}
+              Population: {countryData?.population || "N/A"}
             </Typography>
           </CardContent>
-        </Collapse>
-      </Card>
+          <CardActions disableSpacing>
+            <IconButton aria-label="add to favorites">
+              <FavoriteIcon />
+            </IconButton>
+            {/* <IconButton aria-label="share"></IconButton> */}
+            <ExpandMore
+              expand={expanded}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
+            </ExpandMore>
+          </CardActions>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              <Typography paragraph>
+                Language:
+                {countryData?.languages
+                  ? Object.values(countryData.languages).join(", ")
+                  : "N/A"}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Region: {countryData?.region || "N/A"}
+              </Typography>
+
+              <Typography variant="body2" color="text.secondary">
+                Area: {countryData?.area || "N/A"} sq km
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Timezones:{" "}
+                {countryData?.timezones
+                  ? countryData.timezones.join(", ")
+                  : "N/A"}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Continents:{" "}
+                {countryData?.continents
+                  ? countryData.continents.join(", ")
+                  : "N/A"}
+              </Typography>
+            </CardContent>
+          </Collapse>
+        </Card>
+      </div>
     </div>
   );
 }
