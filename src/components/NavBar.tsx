@@ -16,21 +16,6 @@ import { Link } from "react-router-dom";
 import { Country } from "./types/type";
 
 function MenuAppBar({ favourites }: { favourites: Country[] }) {
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAuth(event.target.checked);
-  };
-
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -88,9 +73,6 @@ function MenuAppBar({ favourites }: { favourites: Country[] }) {
       </AppBar>
     </Box>
   );
-}
-function NavBar() {
-  return <div>NavBar</div>;
 }
 
 export default MenuAppBar;

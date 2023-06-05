@@ -57,7 +57,10 @@ export default function CountryList({
     setSearchTerm(event?.target.value);
   };
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+    newPage: number
+  ) => {
     setPage(newPage);
   };
 
@@ -123,9 +126,6 @@ export default function CountryList({
                   <TableCell>{country.region}</TableCell>
                   <TableCell>{country.population}</TableCell>
                   <TableCell>
-                    {/* {country.languages
-                      ? Object.values(country.languages).join(", ")
-                      : ""} */}
                     {country.languages
                       ? Object.values(country.languages).map(
                           (language, index) => (
