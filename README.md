@@ -1,3 +1,5 @@
+Deploy Link : https://int-fs-8-react-ts-country.vercel.app/
+
 # React assignment
 
 This assignment is to practice TypeScript
@@ -51,4 +53,4 @@ ONLY DO THIS PART WHEN YOU HAVE COMPLETED THE REQUIREMENTS PART
 
 ![eachCountry](./screenshots/eachCountry.png)
 
-https://int-fs-8-react-ts-country.vercel.app/
+Deploy Link : https://int-fs-8-react-ts-country.vercel.app/
